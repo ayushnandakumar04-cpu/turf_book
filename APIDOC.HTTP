@@ -1,0 +1,99 @@
+# api call for list
+###
+
+GET http://127.0.0.1:8000/turf/
+Accept: application/json
+
+#api call for add
+###
+
+POST http://127.0.0.1:8000/turf/
+Content-Type: application/json
+
+{
+    "name":"Green Arena",
+    "turf_type":"Football",
+    "location":"Thrissur",
+    "price":800,
+    "contact_email":"green@gmail.com"
+
+},
+
+#
+###
+
+GET http://127.0.0.1:8000/turf/1/
+Accept: application/json
+
+#api call for update 
+###
+PUT http://127.0.0.1:8000/turf/1/
+Content-Type: application/json
+
+{
+    "id":1,
+    "name":"Sports Hub",
+    "turf_type":"Cricket",
+    "location":"Kochi",
+    "price":1200,
+    "contact_email":"sp@gmail.com"
+}
+
+#
+###
+
+DELETE http://127.0.0.1:8000/turf/1/
+Content-Type: application/json
+
+{
+    "id":1
+}
+
+
+
+#api call for llist in serializer
+###
+
+GET http://127.0.0.1:8000/v2/turf/2/
+Accept: application/json
+
+#api call for add
+###
+
+POST http://127.0.0.1:8000/v2/turf/2/
+Content-Type: application/json
+
+{
+    "name":"Play Zone",
+    "turf_type":"Badminton",
+    "location":"MBBS",
+    "price":700,
+    "contact_email":"zone@gmail.com"
+}
+
+#
+###
+
+PUT http://127.0.0.1:8000/v2/turf/2/
+Content-Type: application/json
+
+{
+    "id": 2,
+    "name": "Super Soccer",
+    "turf_type":"Football",
+    "location":"MBBS",
+    "price": 600,
+    "contact_email":"super@gmail.com"
+}
+
+#
+###
+
+POST http://127.0.0.1:8000/v2/admin/register/
+Content-Type: application/json
+
+{
+    "username":"As123",
+    "password":"Ashwin@123",
+    "email":"ashwin@gmail.com"
+}
