@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'turf_crud',
     'turf_crud_v2',
+    'rest_framework',
+    'booking',
 ]
 
 MIDDLEWARE = [
