@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from turf_crud.views import TurfListCreateView,TurfListRetrieveView
 from turf_crud_v2 import views
-from booking.views import AppointmentListCreateviews
+from booking.views import AppointmentListCreateviews,AppointmentRetrieveUpdateDelete
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -30,4 +31,5 @@ urlpatterns = [
 
     
     path('appointment/',AppointmentListCreateviews.as_view()),
+    path('appointment/<int:pk>/',AppointmentRetrieveUpdateDelete.as_view())
 ]

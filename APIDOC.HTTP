@@ -3,13 +3,13 @@
 
 GET http://127.0.0.1:8000/turf/
 Accept: application/json
-
+Authorization: Basic admin:1234
 #api call for add
 ###
 
 POST http://127.0.0.1:8000/turf/
 Content-Type: application/json
-
+Authorization: Basic admin:1234
 {
     "name":"Green Arena",
     "turf_type":"Football",
@@ -24,12 +24,12 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/turf/1/
 Accept: application/json
-
+Authorization: Basic admin:1234
 #api call for update 
 ###
 PUT http://127.0.0.1:8000/turf/1/
 Content-Type: application/json
-
+Authorization: Basic admin:1234
 {
     "id":1,
     "name":"Sports Hub",
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 DELETE http://127.0.0.1:8000/turf/1/
 Content-Type: application/json
-
+Authorization: Basic admin:1234
 {
     "id":1
 }
@@ -56,12 +56,13 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/v2/turf/2/
 Accept: application/json
-Authorization: Basic admin:admin
+Authorization: Basic admin:Ashwin@123
 #api call for add
 ###
 
 POST http://127.0.0.1:8000/v2/turf/2/
 Content-Type: application/json
+Authorization: Basic admin:As123
 
 {
     "name":"Play Zone",
@@ -103,3 +104,51 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/appointment/
 Accept: application/json
+
+#
+###
+
+POST  http://127.0.0.1:8000/appointment/
+Content-Type: application/json
+
+{
+    "customer_name":"Arul",
+    "phone":"12345",
+    "turf":2,
+    "date":"2025-02-09",
+    "purpose":"football"
+
+}
+
+#api call for list
+###
+
+GET http://127.0.0.1:8000/appointment/1/
+Accept: application/json
+
+#api call for delete
+###
+
+DELETE http://127.0.0.1:8000/appointment/1/
+Content-Type: application/json
+
+{
+    "id":2
+}
+
+#api call for update
+###
+PUT http://127.0.0.1:8000/appointment/1/
+Content-Type: application/json
+
+{
+    "customer_name":"Arnold",
+    "phone":"12490",
+    "turf":2,
+    "date":"2028-02-09",
+    "purpose":"cricket"
+
+}
+
+
+
