@@ -185,13 +185,13 @@ Authorization: Basic drf:password@123
 
 #api for detail for record
 ###
-GET http://127.0.0.1:8000/v2/booking/turf/booking/2/
+GET http://127.0.0.1:8000/turf/booking/2/
 Accept: application/json
 Authorization: Basic drf:password@123
 
 # api for updating record
 ###
-PUT http://127.0.0.1:8000/v2/booking/turf/booking/2/
+PUT http://127.0.0.1:8000/turf/booking/2/
 Content-Type: application/json
 Authorization: Basic drf:password@123
 
@@ -205,7 +205,7 @@ Authorization: Basic drf:password@123
 
 # api for calling to delete record
 ###
-DELETE http://127.0.0.1:8000/v2/booking/turf/booking/2/
+DELETE http://127.0.0.1:8000/turf/booking/2/
 Accept: application/json
 Authorization: Basic drf:password@123
 
