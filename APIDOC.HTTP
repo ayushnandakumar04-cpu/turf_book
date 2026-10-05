@@ -150,5 +150,62 @@ Content-Type: application/json
 
 }
 
+#
+###
 
+POST http://127.0.0.1:8000/turf/signup/
+Content-Type: application/json
+
+{
+    "username":"ayu123",
+    "email":"ayu@gmail.com",
+    "password":"ayush$56"
+}
+
+# listing all booked records api
+###
+GET http://127.0.0.1:8000/turf/booking/
+Accept: application/json
+Authorization: Basic drf:ayush@56
+
+#api for booking turf
+###
+POST http://127.0.0.1:8000/turf/booking/
+Content-Type: application/json
+Authorization: Basic drf:password@123
+
+{
+   "name":"liminar",
+   "location":"thrisue",
+   "email":"luminar@gmail.com",
+   "phone_number":"8128380834",
+   "duration":"07:30 AM"
+}
+
+
+#api for detail for record
+###
+GET http://127.0.0.1:8000/v2/booking/turf/booking/2/
+Accept: application/json
+Authorization: Basic drf:password@123
+
+# api for updating record
+###
+PUT http://127.0.0.1:8000/v2/booking/turf/booking/2/
+Content-Type: application/json
+Authorization: Basic drf:password@123
+
+{
+   "name":"big-b",
+   "location":"kochi",
+   "email":"big-b@gmail.com",
+   "phone_number":"8928380834",
+   "duration":"02:10 AM"
+}
+
+# api for calling to delete record
+###
+DELETE http://127.0.0.1:8000/v2/booking/turf/booking/2/
+Accept: application/json
+Authorization: Basic drf:password@123
 

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'turf_crud_v2',
     'rest_framework',
     'booking',
+    'booking_v2',
 ]
 
 MIDDLEWARE = [
