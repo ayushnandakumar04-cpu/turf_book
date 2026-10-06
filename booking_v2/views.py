@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import authentication,permissions
 from booking_v2.models import Turf
 from booking.models import Appointment
+from datetime import time,datetime,timedelta
 class SignupRegisterview(APIView):
     def post(sef,request):
 
@@ -109,22 +110,36 @@ class AppointmentListCreateview(APIView):
         return Response(data=serializer.data)
     
     def post(self,request):
-         form_data=request.data
-         serializer_instance=AppointmentSerializer(data=form_data)
-         if serializer_instance.is_valid():
-                        cleaned_data=serializer_instance.validated_data
-                        turf=cleaned_data.get("turf")
-                        date=cleaned_data.get("date")
-        
-                        last_appointment=Appointment.objects.filter(turf=turf,date=date)
-        
-                        id=0
-                        if last_appointment:
-                             id=last_appointment.booking_id+1
-                        else:
-                            id=1
-                        print(id,"===============")
-        
-                        return Response(data={"booking_id":id,"status":"booked"})
-         else:
-                        return Response(data=serializer_instance.errors)
+            form_data=request.data
+            serializer_instance=AppointmentSerializer(data=form_data)
+            
+            if serializer_instance.is_valid():
+                    cleaned_data=serializer_instance.validated_data
+                    turf_id=cleaned_data.get("id")
+                    date=cleaned_data.get("date")
+    
+                    last_date=Appointment.objects.filter(turf_id=turf_id,date=date).last()
+
+                    appointment_time= time(10,0)
+                    if last_date:
+                         
+                        cleaned_data["id"]=last_date.id+1
+
+                        next_time_date= datetime.combine(date,last_date.duration)+timedelta(minutes=15)
+
+                        appointment_time=next_time_date.time()
+                    else:
+
+                        cleaned_data["id"]=1
+
+                        
+                        cleaned_data["duration"] = appointment_time
+
+                        qs = Appointment.objects.create(**cleaned_data)
+
+                        serializer_instance = AppointmentSerializer(qs)
+
+                    return Response(data=serializer_instance.data)
+
+            else:
+                 return Response(data=serializer_instance.errors)

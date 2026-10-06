@@ -226,9 +226,12 @@ Content-Type: application/json
 Authorization: ayu123:ayush$56
 
 {
-   "name":"Deva",
+   "customer_name":"Deva",
+   "turf":4,
    "location":"thirur",
    "email":"deva@gmail.com",
+   "purpose":"inaugration",
    "date":"2026-02-10",
-   "phone_number":"81283878"
+   "phone":"81283878",
+   "duration":"8:00AM"
 }

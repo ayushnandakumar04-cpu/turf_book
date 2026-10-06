@@ -21,7 +21,7 @@ class TurfBookingSerializer(serializers.ModelSerializer):
 
          model = Turf
 
-         fields = '__all__'
+         fields = "__all__"
 
         def validate(self,validate_data):
 
@@ -38,7 +38,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
         model=Appointment
 
-        field="__init__"
+        fields="__all__"
 
-        read_only_fields=["id","duration","email","date"]
+        read_only_fields=["id","duration","email",]
 
