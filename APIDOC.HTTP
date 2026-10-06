@@ -166,18 +166,19 @@ Content-Type: application/json
 ###
 GET http://127.0.0.1:8000/turf/booking/
 Accept: application/json
-Authorization: Basic drf:ayush@56
+Authorization: ayu123:ayush$56
 
 #api for booking turf
 ###
 POST http://127.0.0.1:8000/turf/booking/
 Content-Type: application/json
-Authorization: Basic drf:password@123
+Authorization: ayu123:ayush$56
 
 {
-   "name":"liminar",
-   "location":"thrisue",
-   "email":"luminar@gmail.com",
+   "name":"luminar",
+   "location":"thrisur",
+   "contact_email":"luminar@gmail.com",
+   "price":500,
    "phone_number":"8128380834",
    "duration":"07:30 AM"
 }
@@ -187,18 +188,19 @@ Authorization: Basic drf:password@123
 ###
 GET http://127.0.0.1:8000/turf/booking/2/
 Accept: application/json
-Authorization: Basic drf:password@123
+Authorization: ayu123:ayush$56
 
 # api for updating record
 ###
 PUT http://127.0.0.1:8000/turf/booking/2/
 Content-Type: application/json
-Authorization: Basic drf:password@123
+Authorization: ayu123:ayush$56
 
 {
    "name":"big-b",
    "location":"kochi",
-   "email":"big-b@gmail.com",
+   "contact_email":"big-b@gmail.com",
+   "price":300,
    "phone_number":"8928380834",
    "duration":"02:10 AM"
 }
@@ -207,5 +209,26 @@ Authorization: Basic drf:password@123
 ###
 DELETE http://127.0.0.1:8000/turf/booking/2/
 Accept: application/json
-Authorization: Basic drf:password@123
+Authorization: ayu123:ayush$56
 
+#
+###
+
+GET http://127.0.0.1:8000/turf/appointement/
+Accept: application/json
+Authorization: ayu123:ayush$56
+
+#
+###
+
+POST http://127.0.0.1:8000/turf/appointement/
+Content-Type: application/json
+Authorization: ayu123:ayush$56
+
+{
+   "name":"Deva",
+   "location":"thirur",
+   "email":"deva@gmail.com",
+   "date":"2026-02-10",
+   "phone_number":"81283878"
+}

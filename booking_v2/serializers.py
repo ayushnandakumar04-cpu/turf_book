@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from booking_v2.models import Turf
+from booking.models import Appointment
 from datetime import time
 class SignupSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,6 +9,7 @@ class SignupSerializer(serializers.ModelSerializer):
         model=User
 
         fields=["username","email","password"]
+        
 class TurfBookingSerializer(serializers.ModelSerializer):
 
         duration = serializers.TimeField(
@@ -30,3 +32,13 @@ class TurfBookingSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError("Turf Closed")
 
           return validate_data
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+
+        model=Appointment
+
+        field="__init__"
+
+        read_only_fields=["id","duration","email","date"]
+

@@ -1,9 +1,10 @@
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
-from booking_v2.serializers import SignupSerializer,TurfBookingSerializer
+from booking_v2.serializers import SignupSerializer,TurfBookingSerializer,AppointmentSerializer
 from rest_framework.response import Response
 from rest_framework import authentication,permissions
 from booking_v2.models import Turf
+from booking.models import Appointment
 class SignupRegisterview(APIView):
     def post(sef,request):
 
@@ -95,4 +96,35 @@ class TurfBokingRetrieveUpdateDeleteView(APIView):
         qs.delete()
 
         return Response(data=serializer_instant.errors)
-            
+
+
+class AppointmentListCreateview(APIView):
+
+    def get(self,request):
+
+        qs=Appointment.objects.all()
+
+        serializer=AppointmentSerializer(qs,many=True)
+
+        return Response(data=serializer.data)
+    
+    def post(self,request):
+         form_data=request.data
+         serializer_instance=AppointmentSerializer(data=form_data)
+         if serializer_instance.is_valid():
+                        cleaned_data=serializer_instance.validated_data
+                        turf=cleaned_data.get("turf")
+                        date=cleaned_data.get("date")
+        
+                        last_appointment=Appointment.objects.filter(turf=turf,date=date)
+        
+                        id=0
+                        if last_appointment:
+                             id=last_appointment.booking_id+1
+                        else:
+                            id=1
+                        print(id,"===============")
+        
+                        return Response(data={"booking_id":id,"status":"booked"})
+         else:
+                        return Response(data=serializer_instance.errors)

@@ -37,8 +37,6 @@ class AppointmentListCreateviews(APIView):
 
 class AppointmentRetrieveUpdateDelete(APIView):
 
-     
-
      def get(self,request,pk=None):
         qs=Appointment.objects.filter(id=pk).values()
         t_list = list(qs)
