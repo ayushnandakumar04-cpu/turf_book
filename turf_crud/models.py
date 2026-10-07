@@ -7,9 +7,9 @@ from django.db import models
 
 class Turf(models.Model):
 
-    name = models.CharField(max_length=200)
+     name = models.CharField(max_length=200)
 
-    TURF_TYPE_OPTIONS = (
+     TURF_TYPE_OPTIONS = (
 
         ("football", "Football"),
         ("cricket", "Cricket"),
@@ -20,19 +20,19 @@ class Turf(models.Model):
         ("other", "Other")
     )
 
-    turf_type = models.CharField(
+     turf_type = models.CharField(
         max_length=200,
         choices=TURF_TYPE_OPTIONS,
         default="other"
     )
 
-    location = models.CharField(max_length=200)
+     location = models.CharField(max_length=200)
 
-    price = models.PositiveIntegerField()
+     price = models.PositiveIntegerField()
 
-    contact_email = models.EmailField(unique=True)
+     contact_email = models.EmailField(unique=True)
 
     # String representation of object
-    def __str__(self):
+     def __str__(self):
 
         return self.name

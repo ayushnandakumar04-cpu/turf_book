@@ -1,10 +1,10 @@
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
-from booking_v2.serializers import SignupSerializer,TurfBookingSerializer,AppointmentSerializer
+from booking_v2.serializers import SignupSerializer,TurfBookingSerializer
 from rest_framework.response import Response
 from rest_framework import authentication,permissions
-from booking_v2.models import Turf
-from booking.models import Appointment
+from booking_v2.models import Booking
+from rest_framework.generics import ListAPIView,RetrieveAPIView,DestroyAPIView,UpdateAPIView
 from datetime import time,datetime,timedelta
 class SignupRegisterview(APIView):
     def post(sef,request):
@@ -27,119 +27,67 @@ class SignupRegisterview(APIView):
 
             return Response(data=ser_inst.errors)
 
-class TurfBookingListCreateView(APIView):
-
-    authentication_classes = [authentication.BasicAuthentication]
-
-    permission_classes = [permissions.AllowAny]
-
-    def get(self,request):
-
-        qs = Turf.objects.all()
-
-        serializer_instant = TurfBookingSerializer(qs,many=True)
-
-        return Response(data=serializer_instant.data)
-
-
-    def post(self,request):
-
-        form_data = request.data
-
-        serializer_instant = TurfBookingSerializer(data=form_data)
-
-        if serializer_instant.is_valid():
-
-            cleaned_data = serializer_instant.validated_data
-
-            Turf.objects.create(**cleaned_data)
-
-            return Response(data=serializer_instant.data)
-
-        else:
-            
-            return Response(data=serializer_instant.errors)
-
-class TurfBokingRetrieveUpdateDeleteView(APIView):
-
-    authentication_classes = [authentication.BasicAuthentication]
-
-    permission_classes = [permissions.AllowAny]
-
-    def get(self,request,pk=None):
-
-        qs = Turf.objects.get(id=pk)
-
-        serializer_instant = TurfBookingSerializer(qs)
-
-        return Response(data=serializer_instant.data)
-
-    def put(self,request,pk=None):
-
-        form_data = request.data
-
-        serializer_instant = TurfBookingSerializer(data=form_data)
-
-        if serializer_instant.is_valid():
-
-            cleaned_data = serializer_instant.validated_data
-
-            Turf.objects.filter(id=pk).update(**cleaned_data)
-
-            return Response(data=serializer_instant.data)
-
-    def delete(self,request,pk=None):
-
-        qs = Turf.objects.get(id=pk)
-
-        serializer_instant = TurfBookingSerializer(qs)
-
-        qs.delete()
-
-        return Response(data=serializer_instant.errors)
-
 
 class AppointmentListCreateview(APIView):
 
     def get(self,request):
 
-        qs=Appointment.objects.all()
+        qs=Booking.objects.all()
 
-        serializer=AppointmentSerializer(qs,many=True)
+        serializer=TurfBookingSerializer(qs,many=True)
 
         return Response(data=serializer.data)
     
     def post(self,request):
-            form_data=request.data
-            serializer_instance=AppointmentSerializer(data=form_data)
+        
+        form_data = request.data
+
+        serializer_instant = TurfBookingSerializer(data=form_data)
+
+        if serializer_instant.is_valid():
+
+            cleaned_data = serializer_instant.validated_data
+
+            turf_id = cleaned_data.get("turf_id")
+
+            booking_date = cleaned_data.get("booking_date")
+
             
-            if serializer_instance.is_valid():
-                    cleaned_data=serializer_instance.validated_data
-                    turf_id=cleaned_data.get("id")
-                    date=cleaned_data.get("date")
-    
-                    last_date=Appointment.objects.filter(turf_id=turf_id,date=date).last()
 
-                    appointment_time= time(10,0)
-                    if last_date:
-                         
-                        cleaned_data["id"]=last_date.id+1
+            last_booking_object = Booking.objects.filter(turf=turf_id,booking_date=booking_date).order_by("booking_time").order_by("booking_time")
 
-                        next_time_date= datetime.combine(date,last_date.duration)+timedelta(minutes=15)
+            if not last_booking_object.exists():
+                 booking_time_details = time(10, 0)
 
-                        appointment_time=next_time_date.time()
-                    else:
-
-                        cleaned_data["id"]=1
-
-                        
-                        cleaned_data["duration"] = appointment_time
-
-                        qs = Appointment.objects.create(**cleaned_data)
-
-                        serializer_instance = AppointmentSerializer(qs)
-
-                    return Response(data=serializer_instance.data)
+            elif last_booking_object.count() == 1:
+                  booking_time_details = time(12, 0)
 
             else:
-                 return Response(data=serializer_instance.errors)
+                return Response(
+                    {"Message": "No booking slots available for this date."}
+                )
+
+            
+            qs = Booking.objects.create(
+                    **cleaned_data,
+                    booking_time=booking_time_details
+                )
+
+            serializer_instance = TurfBookingSerializer(qs)
+
+            return Response(data=serializer_instance.data)
+
+        else:
+           return Response(data=serializer_instant.errors)
+     
+
+class AppointmentRetrieveUpdateDeleteView(RetrieveAPIView,DestroyAPIView,UpdateAPIView):
+
+     authentication_classes=[authentication.BasicAuthentication]
+
+     permission_classes=[permissions.IsAuthenticated]
+
+     serializer_class=TurfBookingSerializer
+
+     queryset=Booking.objects.all()
+            

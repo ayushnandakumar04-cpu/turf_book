@@ -166,13 +166,13 @@ Content-Type: application/json
 ###
 GET http://127.0.0.1:8000/turf/booking/
 Accept: application/json
-Authorization: ayu123:ayush$56
+Authorization: Basic ayu123:ayush$56
 
 #api for booking turf
 ###
 POST http://127.0.0.1:8000/turf/booking/
 Content-Type: application/json
-Authorization: ayu123:ayush$56
+Authorization: Basic ayu123:ayush$56
 
 {
    "name":"luminar",
@@ -188,7 +188,7 @@ Authorization: ayu123:ayush$56
 ###
 GET http://127.0.0.1:8000/turf/booking/2/
 Accept: application/json
-Authorization: ayu123:ayush$56
+Authorization: Basic ayu123:ayush$56
 
 # api for updating record
 ###
@@ -216,22 +216,29 @@ Authorization: ayu123:ayush$56
 
 GET http://127.0.0.1:8000/turf/appointement/
 Accept: application/json
-Authorization: ayu123:ayush$56
+Authorization: Basic ayu123:ayush$56
 
 #
 ###
 
 POST http://127.0.0.1:8000/turf/appointement/
 Content-Type: application/json
-Authorization: ayu123:ayush$56
+Authorization: Basic ayu123:ayush$56
 
 {
-   "customer_name":"Deva",
-   "turf":4,
-   "location":"thirur",
-   "email":"deva@gmail.com",
-   "purpose":"inaugration",
-   "date":"2026-02-10",
-   "phone":"81283878",
-   "duration":"8:00AM"
+   "turf":1,
+   "name":"rohny",
+   "location":"ksargod",
+   "email":"rohny@gmail.com",
+   "phone_number":"9287380834",
+   "date":"2026-08-10",
+   "duration":"2:00 AM",
+   "booking_date":"2026-10-03"
 }
+
+#api call for get
+###
+
+GET http://127.0.0.1:8000/turf/appointement/1/
+Accept: application/json
+Authorization: Basic ayu123:ayush$56

@@ -1,8 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from booking_v2.models import Turf
-from booking.models import Appointment
-from datetime import time
+from booking_v2.models import Booking
+from datetime import datetime
 class SignupSerializer(serializers.ModelSerializer):
     class Meta:
 
@@ -12,33 +11,35 @@ class SignupSerializer(serializers.ModelSerializer):
         
 class TurfBookingSerializer(serializers.ModelSerializer):
 
-        duration = serializers.TimeField(
-            format="%I:%M %p",
-            input_formats=["%I:%M %p"]
-        )
-
-        class Meta:
-
-         model = Turf
-
-         fields = "__all__"
-
-        def validate(self,validate_data):
-
-          end_time = validate_data.get("duration")
-
-          if end_time >= time(21, 0):
-               
-                raise serializers.ValidationError("Turf Closed")
-
-          return validate_data
-
-class AppointmentSerializer(serializers.ModelSerializer):
+    turf = serializers.StringRelatedField()
+ 
     class Meta:
 
-        model=Appointment
+        model=Booking
 
-        fields="__all__"
+        fields = "__all__"
 
-        read_only_fields=["id","duration","email",]
+        read_only_fields=["id","token_number","appointment_time","created_at"]
+
+        def validate(self,validated_data):
+
+            booking_date=validated_data.get("booking_date")
+
+            turf_id=validated_data.get("turf_id")
+
+            if booking_date<datetime.today().date():
+
+                raise serializers.ValidationError("date should be > cur date")
+
+            last_appointment=Booking.objects.filter(turf_id=turf_id,booking_date=booking_date).last()
+
+            if last_appointment:
+
+                if last_appointment.booking_time == 18:
+
+                    raise serializers.ValidationError("slot full....")
+
+            return validated_data
+        
+
 
